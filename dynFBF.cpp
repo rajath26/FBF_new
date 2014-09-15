@@ -360,6 +360,40 @@ public:
     cout<<" RESULT :: The effective FPR of the FBF is: " <<effectiveFPR <<endl;
   }
 
+  /************************************************************
+   * FUNCTION NAME: checkNewEffectiveFPR
+   *
+   * This function checks the NEW effective FPR of the FBF
+   *
+   * RETURNS: void
+   ***********************************************************/
+  void checkNewEffectiveFPR() {
+    unsigned int counter = 0;
+    unsigned int temp = 0;
+    double effectiveFPR = 0.0;
+
+    cout<<endl<<" INFO :: Individual FPP here: " <<endl;
+    cout<<" INFO :: Future BF FPP: " <<dyn_fbf[dfuture].effective_fpp() <<endl;
+    for ( unsigned int i = present; i <= pastEnd; i++ ) {
+      cout<<" INFO :: " <<i <<"BF FPP: " <<dyn_fbf[i].effective_modified_fpp() <<endl;
+    }
+
+    effectiveFPR = (1 - dyn_fbf[pastEnd].effective_modified_fpp());
+    for ( counter = dfuture; counter < pastEnd; counter++ ) {
+      temp = counter + 1;
+      if ( counter == dfuture ) {
+        effectiveFPR *= (1 - (dyn_fbf[counter].effective_fpp() * dyn_fbf[temp].effective_modified_fpp()));
+      }
+      else {
+        effectiveFPR *= (1 - (dyn_fbf[counter].effective_modified_fpp() * dyn_fbf[temp].effective_modified_fpp()));
+      }
+    }
+
+    effectiveFPR = 1 - effectiveFPR;
+
+    cout<<" RESULT :: The NEW effective FPR of the FBF is: " <<effectiveFPR <<endl;
+  }
+
 }; // End of dynFBF class
 
 /* 

@@ -435,6 +435,11 @@ void FPRComparison(unsigned long numberOfBFs,
 	   */
 	  dyn_FBF.checkEffectiveFPR();
 
+	  /*
+	   * STEP 6: Check new effective FPR
+	   */
+      dyn_FBF.checkNewEffectiveFPR();
+
 	  cout<<" -----------------------------------------------------------" <<endl <<endl;
 
 }
@@ -661,21 +666,21 @@ void varyConstituentBFNumbers() {
 }
 
 /******************************************************************************
- * FUNCTION NAME: effectiveFPRvsActualFPR
+ * FUNCTION NAME: effectiveFPRvsNewEffectiveFPRvsActualFPR
  *
  * This function runs the test case where the effective FPR of the FBF
- * calculated mathematically is compared with the FPR calculated
- * practically
+ * calculated mathematically (old and new one) is compared with the FPR
+ * calculated practically
  *
  * RETURNS: void
  ******************************************************************************/
-void effectiveFPRvsActualFPR() {
-    FPRComparison(3, 1000, 6250, 3, 3, 200, 500);
-    FPRComparison(3, 2000, 6250, 3, 3, 200, 1000);
-    FPRComparison(3, 3000, 6250, 3, 3, 200, 1500);
-    FPRComparison(3, 4000, 6250, 3, 3, 200, 2000);
-    FPRComparison(3, 5000, 6250, 3, 3, 200, 2500);
-	FPRComparison(3, 6250, 6250, 3, 3, 200, 3125);
+void effectiveFPRvsNewEffectiveFPRvsActualFPR() {
+  FPRComparison(3, 1000, 6250, 3, 3, 200, 500);
+  FPRComparison(3, 2000, 6250, 3, 3, 200, 1000);
+  FPRComparison(3, 3000, 6250, 3, 3, 200, 1500);
+  FPRComparison(3, 4000, 6250, 3, 3, 200, 2000);
+  FPRComparison(3, 5000, 6250, 3, 3, 200, 2500);
+  FPRComparison(3, 6250, 6250, 3, 3, 200, 3125);
 }
 
 /*
@@ -683,12 +688,12 @@ void effectiveFPRvsActualFPR() {
  */
 int main(int argc, char *argv[]) { 
 
-  varyNumElements();
+  //varyNumElements();
   //varyBFsize();
   //varyHashes();
   //varyRefreshRate();
   //varyConstituentBFNumbers();
-  //effectiveFPRvsActualFPR();
+  effectiveFPRvsNewEffectiveFPRvsActualFPR();
 
   return SUCCESS;
 
