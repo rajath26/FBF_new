@@ -675,12 +675,12 @@ void varyConstituentBFNumbers() {
  * RETURNS: void
  ******************************************************************************/
 void effectiveFPRvsNewEffectiveFPRvsActualFPR() {
-  FPRComparison(3, 1000, 6250, 3, 3, 200, 500);
-  FPRComparison(3, 2000, 6250, 3, 3, 200, 1000);
-  FPRComparison(3, 3000, 6250, 3, 3, 200, 1500);
-  FPRComparison(3, 4000, 6250, 3, 3, 200, 2000);
-  FPRComparison(3, 5000, 6250, 3, 3, 200, 2500);
-  FPRComparison(3, 6250, 6250, 3, 3, 200, 3125);
+  FPRComparison(3, 1000, 6250, 3, 3, 200, 1000);
+  FPRComparison(3, 2000, 6250, 3, 3, 200, 2000);
+  FPRComparison(3, 3000, 6250, 3, 3, 200, 3000);
+  FPRComparison(3, 4000, 6250, 3, 3, 200, 4000);
+  FPRComparison(3, 5000, 6250, 3, 3, 200, 5000);
+  FPRComparison(3, 6250, 6250, 3, 3, 200, 6250);
 }
 
 /*

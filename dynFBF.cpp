@@ -349,13 +349,13 @@ public:
       cout<<" INFO :: " <<i <<"BF FPP: " <<dyn_fbf[i].effective_modified_fpp() <<endl;
     }
 
-    effectiveFPR = dyn_fbf[dfuture].effective_fpp() * dyn_fbf[dpresent].effective_modified_fpp();
+    effectiveFPR = (dyn_fbf[dfuture].effective_fpp() * dyn_fbf[dpresent].effective_modified_fpp());
     for ( counter = dpresent; counter <= (pastEnd - 1); counter++ ) {
       temp = counter + 1;
-      effectiveFPR += dyn_fbf[counter].effective_modified_fpp() * dyn_fbf[temp].effective_modified_fpp();
+      effectiveFPR += (dyn_fbf[counter].effective_modified_fpp() * dyn_fbf[temp].effective_modified_fpp());
     }
 
-    effectiveFPR += dyn_fbf[pastEnd].effective_modified_fpp();
+    effectiveFPR += (dyn_fbf[pastEnd].effective_modified_fpp());
 
     cout<<" RESULT :: The effective FPR of the FBF is: " <<effectiveFPR <<endl;
   }
@@ -368,30 +368,34 @@ public:
    * RETURNS: void
    ***********************************************************/
   void checkNewEffectiveFPR() {
-    unsigned int counter = 0;
-    unsigned int temp = 0;
-    double effectiveFPR = 0.0;
+	  unsigned int counter = 0;
+	      unsigned int temp = 0;
+	      double effectiveFPR = 0.0;
+	      double innerEffectiveFPR = 0.0;
+	      size_t total = 0;
 
-    cout<<endl<<" INFO :: Individual FPP here: " <<endl;
-    cout<<" INFO :: Future BF FPP: " <<dyn_fbf[dfuture].effective_fpp() <<endl;
-    for ( unsigned int i = present; i <= pastEnd; i++ ) {
-      cout<<" INFO :: " <<i <<"BF FPP: " <<dyn_fbf[i].effective_modified_fpp() <<endl;
-    }
+	      cout<<endl<<" INFO :: Individual FPP here: " <<endl;
+	      cout<<" INFO :: Future BF FPP: " <<dyn_fbf[dfuture].effective_fpp() <<endl;
+	      cout<<" INFO :: Future BF insert count " <<dyn_fbf[dfuture].element_count() <<endl;
+	      total += dyn_fbf[dfuture].element_count();
+	      for ( unsigned int i = present; i <= pastEnd; i++ ) {
+	        cout<<" INFO :: " <<i <<"BF FPP: " <<dyn_fbf[i].effective_modified_fpp() <<endl;
+	        cout<<" INFO :: " <<i <<"BF insert count: " <<dyn_fbf[i].element_count() <<endl;
+	        total += dyn_fbf[i].element_count();
+	      }
 
-    effectiveFPR = (1 - dyn_fbf[pastEnd].effective_modified_fpp());
-    for ( counter = dfuture; counter < pastEnd; counter++ ) {
-      temp = counter + 1;
-      if ( counter == dfuture ) {
-        effectiveFPR *= (1 - (dyn_fbf[counter].effective_fpp() * dyn_fbf[temp].effective_modified_fpp()));
-      }
-      else {
-        effectiveFPR *= (1 - (dyn_fbf[counter].effective_modified_fpp() * dyn_fbf[temp].effective_modified_fpp()));
-      }
-    }
+	      effectiveFPR = ((dyn_fbf[dfuture].element_count()*1.0)/total) * (dyn_fbf[dfuture].effective_fpp() * dyn_fbf[dpresent].effective_modified_fpp());
+	      cout<<" first: " <<(dyn_fbf[dfuture].element_count()/total);
+	      cout<<" second: " <<(dyn_fbf[dfuture].effective_fpp() * dyn_fbf[dpresent].effective_modified_fpp());
+	      for ( counter = dpresent; counter <= (pastEnd - 1); counter++ ) {
+	        temp = counter + 1;
+	        innerEffectiveFPR += ((dyn_fbf[counter].element_count()*1.0)/total) * (dyn_fbf[counter].effective_modified_fpp() * dyn_fbf[temp].effective_modified_fpp());
+	      }
 
-    effectiveFPR = 1 - effectiveFPR;
+	      effectiveFPR += 0.5 * innerEffectiveFPR;
+	      effectiveFPR += 0.5 * ((dyn_fbf[pastEnd].element_count()*1.0)/total) * dyn_fbf[pastEnd].effective_modified_fpp();
 
-    cout<<" RESULT :: The NEW effective FPR of the FBF is: " <<effectiveFPR <<endl;
+	      cout<<" RESULT :: The NEW effective FPR of the FBF is: " <<effectiveFPR <<endl;
   }
 
 }; // End of dynFBF class
